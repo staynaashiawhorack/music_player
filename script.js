@@ -4,7 +4,7 @@ console.log("Welcome to Spotify")
 let songIndex = 0;
 let audioElement = new Audio('dreamynight.mp3');
 let masterPlay = document.getElementById('masterPlay');
-let myProgressbar = document.getElementById('myprogressbar');
+let myProgressbar = document.getElementById('myProgressBar');
 let gif = document.getElementById('gif');
 let masterSongName = document.getElementById('masterSongName');
 let songItems = Array.from(document.getElementsByClassName('songItem'));
@@ -16,7 +16,7 @@ let songs = [
 
 songItems.forEach((element, i)=>{
    
-    element.getElementByTagName("img")[0].src = songs[i].filepath;
+    // element.getElementsByTagName("img")[0].src = songs[i].filepath;
     element.getElementsByClassName("songName")[0].innerText = songs[i].songName;
 
 
@@ -30,14 +30,14 @@ masterPlay.addEventListener('click',()=>{
     if(audioElement.paused || audioElement.currentTime<=0){
         audioElement.play();
         masterPlay.classList.remove('fa-circle-play');
-        masterPlay.classList.remove('fa-circle-pause');
+        masterPlay.classList.add('fa-circle-pause');
         gif.style.opacity = 1;
 
     }
     else{
         audioElement.pause();
         masterPlay.classList.remove('fa-circle-pause');
-        masterPlay.classList.remove('fa-circle-play');
+        masterPlay.classList.add('fa-circle-play');
         gif.style.opacity = 0;
 
     }
@@ -45,10 +45,8 @@ masterPlay.addEventListener('click',()=>{
 
 //listen to events
 audioElement.addEventListener('timeupdate',()=>{
-    console.log('timeupdate')
     //update seekbar
     progress = parseInt((audioElement.currentTime/audioElement.duration)*100);
-    console.log(progress);
     myProgressbar.value = progress;
 
 })
