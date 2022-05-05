@@ -11,21 +11,17 @@ let songItems = Array.from(document.getElementsByClassName('songItem'));
 
 
 let songs = [
-    {songName:"dreamynight", filepath: "dreamynight.mp3", coverpath: "cover.jpg"}
-    {songName:"doobey", filepath: "dreamynight.mp3", coverpath: "cover.jpg"}
-    {songName:"excuses", filepath: "dreamynight.mp3", coverpath: "cover.jpg"}
-    {songName:"ranjha", filepath: "dreamynight.mp3", coverpath: "cover.jpg"}
-    
-    
-    
-    
+    {songName:"dreamynight", filepath: "/dreamynight.mp3", coverpath: "/cover.jpg"},
+    {songName:"doobey", filepath: "/doobey-gehraiyaan.mp3", coverpath: "/cover.jpg"},
+    {songName:"excuses", filepath: "/excuses.mp3", coverpath: "/cover.jpg"},
+    {songName:"ranjha", filepath: "/ranjha.mp3", coverpath: "/cover.jpg"}
     
 ]
 
 songItems.forEach((element, i)=>{
    
-    element.getElementsByTagName("img")[0].src = songs[i].filepath;
-    element.getElementsByClassName("songName")[0].innerText = songs[i].songName;
+    element.getElementsByTagName("img")[0].src = songs[i].coverpath;
+    document.getElementsByClassName("songName")[i].innerText = songs[i].songName;
 
 
 })
@@ -64,23 +60,24 @@ myProgressbar.addEventListener('change', ()=>{
 })
 
 const makeAllPlays = ()=>{
-    
+
     Array.from(document.getElementsByClassName('songItemPlay')).forEach((element)=>{
-        element.target.classList.remove('fa-circle-pause');
+        element.classList.remove('fa-circle-pause');
         element.classList.add('fa-circle-play');
     })
 
 
 }
 
-Array.from(document.getElementsByClassName('songItemPlay')).forEach((element)=>{
+Array.from(document.getElementsByClassName('songItemPlay')).forEach((element, i)=>{
     element.addEventListener('click',(e)=>{
         
         makeAllPlays();
-        songIndex = parseInt(e.target.id)
+        // songIndex = parseInt(e.target.id); Wrong song index, will always play 1st song, fixed below
+        songIndex = i;
         e.target.classList.remove('fa-circle-play');
         e.target.classList.add('fa-circle-pause');
-        audioElement.src = `songs/${songIndex+1}.mp3`;
+        audioElement.src = `${songs[songIndex].filepath}`;
         audioElement.currentTime = 0;
         audioElement.play();
         masterPlay.classList.remove('fa-circle-play');
@@ -95,7 +92,8 @@ document.getElementById('next').addEventListener('click', ()=>{
     else{
     songIndex += 1;
     }
-    audioElement.src = `songs/${songIndex+1}.mp3`;
+    audioElement.src = `${songs[(songIndex+1)%4].filepath}`;
+    // this will not work when next button is pressed after 3 times, because there are no songs after index 3, have fixed it using mod, try to understand the logic I used here
     audioElement.currentTime = 0;
     audioElement.play();
     masterPlay.classList.remove('fa-circle-play');
@@ -104,14 +102,10 @@ document.getElementById('next').addEventListener('click', ()=>{
 
 
 document.getElementById('previous').addEventListener('click', ()=>{
-    if(songIndex<=0){
-        songIndex = 0
-    }
-    else{
-    songIndex -= 1;
-    }
-    audioElement.src = `songs/${songIndex+1}.mp3`;
-    masterSongName.innerText = songs[songIndex].songName;
+    
+    audioElement.src = `${songs[(songIndex-1==-1?songIndex=3:songIndex--)].filepath}`;
+    // masterSongName.innerText = songs[songIndex-1].songName;
+    //Have used the same logic as above, -1 me jaate hi index dikkat de rha tha, ab infinitely click ho skti hai back button
     audioElement.currentTime = 0;
     audioElement.play();
     masterPlay.classList.remove('fa-circle-play');
