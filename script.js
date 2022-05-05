@@ -10,17 +10,17 @@ let masterSongName = document.getElementById('masterSongName');
 let songItems = Array.from(document.getElementsByClassName('songItem'));
 
 
-let songs = [
-    {songName:"dreamynight", filepath: "dreamynight.mp3", coverpath: "cover.jpg"}
-    {songName:"doobey", filepath: "dreamynight.mp3", coverpath: "cover.jpg"}
-    {songName:"excuses", filepath: "dreamynight.mp3", coverpath: "cover.jpg"}
-    {songName:"ranjha", filepath: "dreamynight.mp3", coverpath: "cover.jpg"}
+let songs = 
+    {songName:"dreamynight", filepath: "dreamynight.mp3", coverpath: "cover.jpg"
+    ,songName:"doobey", filepath: "dreamynight.mp3", coverpath: "cover.jpg",
+    songName:"excuses", filepath: "dreamynight.mp3", coverpath: "cover.jpg",
+    songName:"ranjha", filepath: "dreamynight.mp3", coverpath: "cover.jpg"};
     
     
     
     
     
-]
+
 
 songItems.forEach((element, i)=>{
    
