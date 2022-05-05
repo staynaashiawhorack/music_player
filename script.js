@@ -10,13 +10,14 @@ let masterSongName = document.getElementById('masterSongName');
 let songItems = Array.from(document.getElementsByClassName('songItem'));
 
 
+
 let songs = [
     {songName:"dreamynight", filepath: "/dreamynight.mp3", coverpath: "/cover.jpg"},
     {songName:"doobey", filepath: "/doobey-gehraiyaan.mp3", coverpath: "/cover.jpg"},
     {songName:"excuses", filepath: "/excuses.mp3", coverpath: "/cover.jpg"},
     {songName:"ranjha", filepath: "/ranjha.mp3", coverpath: "/cover.jpg"}
-    
-]
+];
+
 
 songItems.forEach((element, i)=>{
    
@@ -73,7 +74,7 @@ Array.from(document.getElementsByClassName('songItemPlay')).forEach((element, i)
     element.addEventListener('click',(e)=>{
         
         makeAllPlays();
-        // songIndex = parseInt(e.target.id); Wrong song index, will always play 1st song, fixed below
+        // songIndex = parseInt(e.target.id); Wrong song index, will always play 1st song, fixed below  
         songIndex = i;
         e.target.classList.remove('fa-circle-play');
         e.target.classList.add('fa-circle-pause');
@@ -86,14 +87,14 @@ Array.from(document.getElementsByClassName('songItemPlay')).forEach((element, i)
 })
 
 document.getElementById('next').addEventListener('click', ()=>{
-    if(songIndex>=9){
-        songIndex = 0
+    if(songIndex==3){
+        songIndex = 0;
     }
     else{
-    songIndex += 1;
+    songIndex ++;
     }
-    audioElement.src = `${songs[(songIndex+1)%4].filepath}`;
-    // this will not work when next button is pressed after 3 times, because there are no songs after index 3, have fixed it using mod, try to understand the logic I used here
+    audioElement.src = `${songs[songIndex].filepath}`;
+    // this will not work when next button is pressed after 3 times, because there are no songs after index 3, try to understand the logic I used here
     audioElement.currentTime = 0;
     audioElement.play();
     masterPlay.classList.remove('fa-circle-play');
@@ -102,9 +103,12 @@ document.getElementById('next').addEventListener('click', ()=>{
 
 
 document.getElementById('previous').addEventListener('click', ()=>{
+    if(songIndex==0)
+        songIndex = 3;
+    else
+        songIndex--;
     
-    audioElement.src = `${songs[(songIndex-1==-1?songIndex=3:songIndex--)].filepath}`;
-    // masterSongName.innerText = songs[songIndex-1].songName;
+    audioElement.src = `${songs[songIndex].filepath}`;
     //Have used the same logic as above, -1 me jaate hi index dikkat de rha tha, ab infinitely click ho skti hai back button
     audioElement.currentTime = 0;
     audioElement.play();
